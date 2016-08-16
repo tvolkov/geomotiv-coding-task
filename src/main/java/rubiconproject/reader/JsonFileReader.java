@@ -2,6 +2,7 @@ package rubiconproject.reader;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 
 import java.io.File;
@@ -20,9 +21,9 @@ public class JsonFileReader implements InputFileReader {
     }
 
     @Override
-    public List<Entry> readFile() {
+    public Collection readFile(String colletcionId) {
         try {
-            return objectMapper.readValue(new File(pathTofile), new TypeReference<ArrayList<Entry>>() {});
+            return new Collection(colletcionId, objectMapper.readValue(new File(pathTofile), new TypeReference<ArrayList<Entry>>() {}));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

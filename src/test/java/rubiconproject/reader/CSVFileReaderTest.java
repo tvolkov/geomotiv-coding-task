@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class CSVFileReaderTest {
     private static final String SCORE = "454";
     private static final String[] MOCKED_CSV_LINE = {ID, NAME, MOBILE, SCORE};
 
+    private static final String COLLECTION_ID = "collections1";
+
     @Before
     public void setUp(){
         csvFileReader = new CSVFileReader(mockedCsvReader);
@@ -38,11 +41,12 @@ public class CSVFileReaderTest {
         when(mockedCsvReader.readNext()).thenReturn(MOCKED_CSV_LINE).thenReturn(null);
 
         //when
-        List<Entry> result = csvFileReader.readFile();
+        Collection result = csvFileReader.readFile(COLLECTION_ID);
 
         //then
-        assertEquals(1, result.size());
-        Entry entry = result.get(0);
+        assertEquals(COLLECTION_ID, result.getCollectionId());
+        assertEquals(1, result.getEntries().size());
+        Entry entry = result.getEntries().get(0);
         assertEquals(ID, entry.getId());
         assertEquals(NAME, entry.getName());
         assertEquals(MOBILE, entry.getIsMobile());
@@ -55,6 +59,6 @@ public class CSVFileReaderTest {
         when(mockedCsvReader.readNext()).thenThrow(IOException.class);
 
         //when
-        csvFileReader.readFile();
+        csvFileReader.readFile(COLLECTION_ID);
     }
 }

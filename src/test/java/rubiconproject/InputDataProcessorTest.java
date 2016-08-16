@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 import rubiconproject.reader.InputFileReader;
 import rubiconproject.reader.InputFileReaderProvider;
@@ -28,6 +29,8 @@ public class InputDataProcessorTest {
     @Mock
     private FileListProvider mockedFileListProvider;
 
+    private static final String COLLECTION_ID = "collection1";
+
     @Before
     public void setUp(){
         inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider);
@@ -42,36 +45,27 @@ public class InputDataProcessorTest {
         inputDataProcessor.processInputData();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionIfThereAre0ProcessedEntries(){
-        //given
-        File mockFile = mock(File.class);
-        InputFileReader mockInputDataReader = mock(InputFileReader.class);
-        when(mockInputDataReader.readFile()).thenReturn(Collections.EMPTY_LIST);
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(Lists.newArrayList(mockFile));
-        when(mockedInputFileReaderProvider.getInputFileReader(mockFile)).thenReturn(mockInputDataReader);
-
-        //when
-        inputDataProcessor.processInputData();
-    }
-
     @Test
     public void shouldReturnListOfProcessedEntries(){
         //given
         File mockFile = mock(File.class);
+        when(mockFile.getName()).thenReturn(COLLECTION_ID);
         InputFileReader mockInputDataReader = mock(InputFileReader.class);
         Entry entry1 = new Entry("1", "1", "1", "1");
         Entry entry2 = new Entry("2", "2", "2", "2");
-        when(mockInputDataReader.readFile()).thenReturn(Lists.newArrayList(entry1, entry2));
+        Collection collection = new Collection(COLLECTION_ID, Lists.newArrayList(entry1, entry2));
+        when(mockInputDataReader.readFile(COLLECTION_ID)).thenReturn(collection);
         when(mockedFileListProvider.getInputFilesList()).thenReturn(Lists.newArrayList(mockFile));
         when(mockedInputFileReaderProvider.getInputFileReader(mockFile)).thenReturn(mockInputDataReader);
 
         //when
-        List<Entry> result = inputDataProcessor.processInputData();
+        List<Collection> result = inputDataProcessor.processInputData();
 
         //then
-        assertEquals(2, result.size());
-        assertEquals(entry1, result.get(0));
-        assertEquals(entry2, result.get(1));
+        assertEquals(1, result.size());
+        List<Entry> resultEntries = result.get(0).getEntries();
+        assertEquals(2, resultEntries.size());
+        assertEquals(entry1, resultEntries.get(0));
+        assertEquals(entry2, resultEntries.get(1));
     }
 }

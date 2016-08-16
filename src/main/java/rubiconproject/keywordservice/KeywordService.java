@@ -1,8 +1,5 @@
 package rubiconproject.keywordservice;
 
-import java.util.List;
-import java.util.Random;
-
 /**
  * <p>A service to resolve keywords from a site object.</p>
  *

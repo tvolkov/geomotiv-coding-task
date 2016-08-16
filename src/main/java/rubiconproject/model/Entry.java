@@ -1,32 +1,32 @@
 package rubiconproject.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Represents an entry from csv or json file.
  * The fields are of a string type to avoid unnecessary conversions, because no operations are to be done on the Entries
  */
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Entry {
     @Getter
     @JsonProperty("site_id")
-    private String Id;
+    private final String Id;
 
     @Getter
     @JsonProperty("name")
-    private String name;
+    private final String name;
 
     @Getter
     @JsonProperty("mobile")
-    private String isMobile;
+    private final String isMobile;
 
     @Getter
     @JsonProperty("score")
-    private String score;
+    private final String score;
+
+    @Getter
+    @Setter
+    private String keywords = "";
 }

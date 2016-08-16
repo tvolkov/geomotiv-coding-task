@@ -1,6 +1,7 @@
 package rubiconproject.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
+import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class CSVFileReader implements InputFileReader {
     }
 
     @Override
-    public List<Entry> readFile() {
+    public Collection readFile(String collectionId) {
         List<Entry> resultList = new ArrayList<>();
         try {
             String[] line;
@@ -31,7 +32,6 @@ public class CSVFileReader implements InputFileReader {
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while parsing file: " + e.getMessage());
         }
-
-        return resultList;
+        return new Collection(collectionId, resultList);
     }
 }

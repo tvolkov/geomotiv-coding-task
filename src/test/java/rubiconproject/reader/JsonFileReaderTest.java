@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class JsonFileReaderTest {
     private JsonFileReader jsonFileReader;
 
     private static final String PATH = "path";
+    private static final String COLLECTION_ID = "collection1";
 
     @Mock
     private ObjectMapper objectMapper;
@@ -45,10 +47,10 @@ public class JsonFileReaderTest {
         when(objectMapper.readValue(eq(file), any(TypeReference.class))).thenReturn(mockedResultList);
 
         //when
-        List<Entry> entries = jsonFileReader.readFile();
+        Collection result = jsonFileReader.readFile(COLLECTION_ID);
 
         //then
-        assertEquals(mockedResultList, entries);
+        assertEquals(mockedResultList, result.getEntries());
     }
 
     @Test(expected = RuntimeException.class)
@@ -57,7 +59,7 @@ public class JsonFileReaderTest {
         when(objectMapper.readValue(any(File.class), any(TypeReference.class))).thenThrow(IOException.class);
 
         //when
-        jsonFileReader.readFile();
+        jsonFileReader.readFile(COLLECTION_ID);
     }
 
 }
