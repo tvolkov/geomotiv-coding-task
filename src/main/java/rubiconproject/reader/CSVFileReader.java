@@ -13,6 +13,7 @@ public class CSVFileReader implements InputFileReader {
     private static final int NAME_INDEX = 1;
     private static final int MOBILE_INDEX = 2;
     private static final int SCORE_INDEX = 3;
+
     private CSVReader csvReader;
 
     public CSVFileReader(CSVReader csvReader) {
