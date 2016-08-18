@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
+import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 import rubiconproject.processor.FileListProvider;
@@ -18,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,6 +35,9 @@ public class InputDataProcessorTest {
     @Mock
     private FileListProvider mockedFileListProvider;
 
+    @Mock
+    private InputDataKeywordsProvider mockInputDataKeywordsProvider;
+
     private static final String COLLECTION1 = "collection1.csv";
     private static final String COLLECTION2 = "collection2.json";
 
@@ -38,7 +45,8 @@ public class InputDataProcessorTest {
 
     @Before
     public void setUp(){
-        inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider);
+        when(mockInputDataKeywordsProvider.provideKeywords(anyListOf(Entry.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
+        inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider, mockInputDataKeywordsProvider);
         inputDataProcessor.setAllowedFileExtensions(ALLOWED_EXTENSIONS);
     }
 

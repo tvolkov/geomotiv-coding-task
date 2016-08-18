@@ -22,7 +22,7 @@ public class InputDataKeywordsProvider {
         }
 
         for (Entry entry : inputEntries) {
-            entry.setKeywords(keywordService.resolveKeywords(entry));
+            entry.setKeywords(keywordService.resolveKeywords(entry.getId()));
         }
         return inputEntries;
     }

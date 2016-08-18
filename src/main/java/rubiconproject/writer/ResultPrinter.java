@@ -1,5 +1,6 @@
 package rubiconproject.writer;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,9 @@ public class ResultPrinter {
 
     private ObjectWriter getWriter() {
         if (prettyPrintResult){
-            return objectMapper.writerWithDefaultPrettyPrinter();
+            DefaultPrettyPrinter pp = new DefaultPrettyPrinter();
+            pp.indentArraysWith(new DefaultPrettyPrinter.FixedSpaceIndenter());
+            return objectMapper.writer(pp);
         }
         return objectMapper.writer();
     }
