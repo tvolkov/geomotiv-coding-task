@@ -34,13 +34,7 @@ public class InputFileReaderProvider {
     }
 
     private Reader createReader(String filename){
-        try {
-//            return new InputStreamReader(new FileInputStream(filename));
-            return (Reader) beanFactory.getBean("inputStreamReader", new FileInputStream(filename));
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("File " + filename + " does not exist");
-        }
-
+        return (Reader) beanFactory.getBean("inputStreamReader", beanFactory.getBean("inputStream", filename));
     }
 
     private InputFileReader createJsonFileReader(String filename){

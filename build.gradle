@@ -17,7 +17,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
 
-    testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
 }
