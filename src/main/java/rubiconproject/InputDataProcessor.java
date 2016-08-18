@@ -1,36 +1,53 @@
 package rubiconproject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import rubiconproject.model.Collection;
-import rubiconproject.model.Entry;
 import rubiconproject.reader.InputFileReaderProvider;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * creates list of collection of entires. No exceptions are thrown in case of empty collections.
  */
-public class InputDataProcessor {
-    private FileListProvider fileListProvider;
-    private InputFileReaderProvider inputFileReaderProvider;
+class InputDataProcessor {
+    private final FileListProvider fileListProvider;
+    private final InputFileReaderProvider inputFileReaderProvider;
 
-    private List<Collection> entries = new ArrayList<>();
+    private String[] allowedFileExtensions;
 
-    public InputDataProcessor(FileListProvider fileListProvider, InputFileReaderProvider inputFileReaderProvider) {
+    private final List<Collection> entries = new ArrayList<>();
+
+    InputDataProcessor(FileListProvider fileListProvider, InputFileReaderProvider inputFileReaderProvider) {
         this.fileListProvider = fileListProvider;
         this.inputFileReaderProvider = inputFileReaderProvider;
     }
 
-    public  List<Collection> processInputData(){
+    List<Collection> processInputData(){
         List<File> inputFiles = fileListProvider.getInputFilesList();
-        if (inputFiles.size() == 0){
-            throw new IllegalStateException("There are no iles in the input directory");
-        }
-        for (File file : inputFiles){
-            entries.add(inputFileReaderProvider.getInputFileReader(file).readFile(file.getName()));
-        }
+        validateInputFiles(inputFiles);
+        entries.addAll(inputFiles.stream().map(file -> inputFileReaderProvider.getInputFileReader(file).readFile(file.getName())).collect(Collectors.toList()));
 
         return entries;
+    }
+
+    private void validateInputFiles(List<File> inputFiles) {
+        //as per requirements, there should only be 2 input files
+        if (inputFiles.size() != 2){
+            throw new IllegalStateException("There are no iles in the input directory");
+        }
+        if (!(endsWithAny(inputFiles.get(0).getName(), allowedFileExtensions) || endsWithAny(inputFiles.get(1).getName(), allowedFileExtensions))){
+            throw new IllegalArgumentException("Incorrect file extensions");
+        }
+    }
+
+    @Value("${allowed.file.extensions}")
+    public void setAllowedFileExtensions(String[] allowedFileExtensions) {
+        this.allowedFileExtensions = allowedFileExtensions;
     }
 }

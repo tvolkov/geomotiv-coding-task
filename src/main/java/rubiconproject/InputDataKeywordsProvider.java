@@ -10,14 +10,14 @@ import static org.apache.commons.collections.CollectionUtils.isEmpty;
 /**
  * gets list of entries and inserts keywords to each element
  */
-public class InputDataKeywordsProvider {
-    private KeywordService keywordService;
+class InputDataKeywordsProvider {
+    private final KeywordService keywordService;
 
-    public InputDataKeywordsProvider(KeywordService keywordService) {
+    InputDataKeywordsProvider(KeywordService keywordService) {
         this.keywordService = keywordService;
     }
 
-    public List<Entry> provideKeywords(List<Entry> inputEntries) {
+    List<Entry> provideKeywords(List<Entry> inputEntries) {
         if (isEmpty(inputEntries)){
             throw new IllegalArgumentException("input entries list is empty!");
         }

@@ -8,22 +8,21 @@ import rubiconproject.model.Entry;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class JsonFileReader implements InputFileReader {
+class JsonFileReader implements InputFileReader {
 
-    private String pathTofile;
-    private ObjectMapper objectMapper;
+    private final String pathToFile;
+    private final ObjectMapper objectMapper;
 
-    public JsonFileReader(String pathTofile, ObjectMapper objectMapper) {
-        this.pathTofile = pathTofile;
+    JsonFileReader(String pathToFile, ObjectMapper objectMapper) {
+        this.pathToFile = pathToFile;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public Collection readFile(String colletcionId) {
+    public Collection readFile(String collectionId) {
         try {
-            return new Collection(colletcionId, objectMapper.readValue(new File(pathTofile), new TypeReference<ArrayList<Entry>>() {}));
+            return new Collection(collectionId, objectMapper.readValue(new File(pathToFile), new TypeReference<ArrayList<Entry>>() {}));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

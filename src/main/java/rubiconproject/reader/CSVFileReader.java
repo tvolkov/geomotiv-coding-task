@@ -8,21 +8,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVFileReader implements InputFileReader {
-
+class CSVFileReader implements InputFileReader {
     private static final int ID_INDEX = 0;
     private static final int NAME_INDEX = 1;
     private static final int MOBILE_INDEX = 2;
     private static final int SCORE_INDEX = 3;
 
-    private CSVReader csvReader;
+    private final CSVReader csvReader;
 
-    public CSVFileReader(CSVReader csvReader) {
+    CSVFileReader(CSVReader csvReader) {
         this.csvReader = csvReader;
     }
 
     @Override
-    public Collection readFile(String collectionId) {
+    public Collection readFile(final String collectionId) {
         List<Entry> resultList = new ArrayList<>();
         try {
             String[] line;

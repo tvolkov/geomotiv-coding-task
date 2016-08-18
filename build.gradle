@@ -14,12 +14,19 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.10"
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
 
-
+    testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
 }
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
 
 task execute (type:JavaExec) {
     main = 'rubiconproject.Main'

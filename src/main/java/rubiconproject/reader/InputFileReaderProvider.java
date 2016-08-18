@@ -2,11 +2,14 @@ package rubiconproject.reader;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.InputStreamReader;
 
+@Component
 public class InputFileReaderProvider {
-    private BeanFactory beanFactory;
+    private final BeanFactory beanFactory;
 
     @Autowired
     public InputFileReaderProvider(BeanFactory beanFactory) {
@@ -18,13 +21,21 @@ public class InputFileReaderProvider {
             throw new IllegalArgumentException("File is null!");
         }
 
-        String name = inputFile.getName();
-        if (name.endsWith(".csv")){
-            return beanFactory.getBean("csvFileReader", CSVFileReader.class);
-        } else if (name.endsWith(".json")){
-            return beanFactory.getBean("jsonFileReader", JsonFileReader.class);
+        String filename = inputFile.getName();
+        if (filename.endsWith(".csv")){
+            return createCSVFileReader(filename);
+        } else if (filename.endsWith(".json")){
+            return createJsonFileReader(filename);
         }
 
         throw new IllegalArgumentException("Only .csv and .json files are supported!");
+    }
+    private InputFileReader createCSVFileReader(String filename){
+        // the inputStreamReader could be define as a bean, but it's just easier to invoke it's constructor here
+        return (InputFileReader) beanFactory.getBean("csvFileReader", beanFactory.getBean("csvReader", new InputStreamReader(getClass().getResourceAsStream("/" + filename))));
+    }
+
+    private InputFileReader createJsonFileReader(String filename){
+        return (InputFileReader) beanFactory.getBean("jsonFileReader", filename, beanFactory.getBean("objectMapper"));
     }
 }

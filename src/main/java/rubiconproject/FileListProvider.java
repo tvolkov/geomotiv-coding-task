@@ -4,14 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileListProvider {
-    private File inputDirectory;
+class FileListProvider {
+    private final File inputDirectory;
 
-    public FileListProvider(File inputDirectory) {
+    FileListProvider(File inputDirectory) {
         this.inputDirectory = inputDirectory;
     }
 
-    public List<File> getInputFilesList() {
+    List<File> getInputFilesList() {
         if (!inputDirectory.exists()) {
             throw new IllegalArgumentException("Directory " + inputDirectory + " doesn't exist");
         }
