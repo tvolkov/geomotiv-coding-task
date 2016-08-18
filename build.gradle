@@ -27,9 +27,23 @@ test {
         exceptionFormat = 'full'
     }
 }
-
+//sourceSets {
+//    main {
+////        java {
+////            srcDir 'src/main/java'
+////            output.classesDir   = 'build/classes/main'
+////        }
+//        resources {
+////            srcDir 'src/main/resources'
+//            srcDirs = ["src/main/resources"]
+//            includes ['application.properties']
+//            output.resourcesDir = 'build/resources/main'
+//        }
+//    }
+//}
 task execute (type:JavaExec) {
     main = 'rubiconproject.Main'
+    println sourceSets.main.runtimeClasspath.asPath
     classpath = sourceSets.main.runtimeClasspath
-    args System.getProperty("exec.args","").split()
+//    args System.getProperty("exec.args","").split()
 }

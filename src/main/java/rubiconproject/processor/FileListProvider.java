@@ -1,14 +1,18 @@
 package rubiconproject.processor;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class FileListProvider {
     private final File inputDirectory;
 
     public FileListProvider(File inputDirectory) {
         this.inputDirectory = inputDirectory;
+        log.debug("initialized with inputDirectory " + inputDirectory);
     }
 
     public List<File> getInputFilesList() {

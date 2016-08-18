@@ -31,6 +31,6 @@ class CSVFileReader implements InputFileReader {
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while parsing file: " + e.getMessage());
         }
-        return new Collection(collectionId, resultList);
+        return new Collection(collectionId, resultList.subList(1, resultList.size()));
     }
 }

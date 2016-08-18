@@ -13,13 +13,14 @@ import rubiconproject.writer.ResultPrinter
 beans {
     xmlns context:"http://www.springframework.org/schema/context"
     context.'component-scan' 'base-package': "rubiconproject"
-    context.'property-placeholder'('location':"file:*.properties")
+    context.'property-placeholder'('location':'classpath:application.properties')
 
     allowedFileExtensions(ListFactoryBean){
         sourceList = [".csv", ".json"]
     }
 
-    csvReader(CSVReader, new InputStreamReader(getClass().getResourceAsStream("/input1.csv"))) { bean ->
+//    csvReader(CSVReader, new InputStreamReader(getClass().getResourceAsStream("/input/input1.csv"))) { bean ->
+    csvReader(CSVReader, null) { bean ->
         bean.scope = 'prototype'
     }
     csvFileReader(CSVFileReader, csvReader) { bean ->
@@ -40,7 +41,8 @@ beans {
     } else if ('${print.location}' == 'file') {
         output(FileOutput)
     } else {
-        throw new RuntimeException("Invalid print.location value")
+//        throw new RuntimeException('${print.location}')
+        output(FileOutput, '${output.file}')
     }
 
     resultPrinter(ResultPrinter)

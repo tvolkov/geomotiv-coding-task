@@ -37,7 +37,7 @@ public class ResultPrinter {
         return objectMapper.writer();
     }
 
-    @Value("${pretty.print.result}")
+    @Value("${pretty.print.results}")
     public void setPrettyPrintResult(boolean prettyPrintResult) {
         this.prettyPrintResult = prettyPrintResult;
     }

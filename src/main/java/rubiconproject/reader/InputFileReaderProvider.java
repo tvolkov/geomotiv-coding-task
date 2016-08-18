@@ -4,9 +4,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 
 @Component
 public class InputFileReaderProvider {
@@ -22,11 +20,11 @@ public class InputFileReaderProvider {
             throw new IllegalArgumentException("File is null!");
         }
 
-        String filename = inputFile.getName();
-        if (filename.endsWith(".csv")){
-            return createCSVFileReader(filename);
-        } else if (filename.endsWith(".json")){
-            return createJsonFileReader(filename);
+        String path = inputFile.getAbsolutePath();
+        if (path.endsWith(".csv")){
+            return createCSVFileReader(path);
+        } else if (path.endsWith(".json")){
+            return createJsonFileReader(path);
         }
 
         throw new IllegalArgumentException("Only .csv and .json files are supported!");
@@ -37,7 +35,11 @@ public class InputFileReaderProvider {
 
     private Reader createReader(String filename){
         // the inputStreamReader could be define as a bean, but it's just easier to invoke it's constructor here
-        return new InputStreamReader(getClass().getResourceAsStream("/" + filename));
+        try {
+            return new InputStreamReader(new FileInputStream(filename));
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("File " + filename + " does not exist");
+        }
     }
 
     private InputFileReader createJsonFileReader(String filename){
