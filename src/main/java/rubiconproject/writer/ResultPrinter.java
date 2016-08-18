@@ -1,6 +1,8 @@
 package rubiconproject.writer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.beans.factory.annotation.Value;
 import rubiconproject.model.Collection;
 
 import java.io.IOException;
@@ -14,15 +16,29 @@ public class ResultPrinter {
         this.objectMapper = objectMapper;
     }
 
+    private boolean prettyPrintResult;
+
     public String printResult(List<Collection> result){
         StringBuilder stringBuilder = new StringBuilder();
         for (Collection collection : result){
             try {
-                stringBuilder.append(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(collection));
+                stringBuilder.append(getWriter().writeValueAsString(collection));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Error occurred during printing result: " + e.getMessage());
             }
         }
         return stringBuilder.toString();
+    }
+
+    private ObjectWriter getWriter() {
+        if (prettyPrintResult){
+            return objectMapper.writerWithDefaultPrettyPrinter();
+        }
+        return objectMapper.writer();
+    }
+
+    @Value("${pretty.print.result}")
+    public void setPrettyPrintResult(boolean prettyPrintResult) {
+        this.prettyPrintResult = prettyPrintResult;
     }
 }

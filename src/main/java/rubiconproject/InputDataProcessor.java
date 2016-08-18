@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static org.apache.commons.lang3.StringUtils.*;
 
 /**
- * creates list of collection of entires. No exceptions are thrown in case of empty collections.
+ * creates list of collection of entries. No exceptions are thrown in case of empty collections.
  */
 class InputDataProcessor {
     private final FileListProvider fileListProvider;
