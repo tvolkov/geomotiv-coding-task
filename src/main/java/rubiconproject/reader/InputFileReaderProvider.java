@@ -34,7 +34,8 @@ public class InputFileReaderProvider {
     }
 
     private Reader createReader(String filename){
-        // the inputStreamReader could be define as a bean, but it's just easier to invoke it's constructor here
+        //ideally this Reader should be a bean, for now I wil just create it directly because it's easy.
+        // Although it's not that easy to test it, since it has to be tested with real file, not mocked
         try {
             return new InputStreamReader(new FileInputStream(filename));
         } catch (FileNotFoundException e) {

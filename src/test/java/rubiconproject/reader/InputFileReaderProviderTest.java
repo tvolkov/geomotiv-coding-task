@@ -9,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -35,13 +37,13 @@ public class InputFileReaderProviderTest {
     }
 
     @Test
-    public void shouldReturnCsvFileReaderIfFileHasCsvExtension(){
+    public void shouldReturnCsvFileReaderIfFileHasCsvExtension() throws URISyntaxException {
         //given
-        File mockFile = mock(File.class);
-        when(mockFile.getName()).thenReturn("input1.csv");
+        URL url = this.getClass().getResource("/input1.csv");
+        File file = new File(url.toURI());
 
         //when
-        InputFileReader inputFileReader = inputFileReaderProvider.getInputFileReader(mockFile);
+        InputFileReader inputFileReader = inputFileReaderProvider.getInputFileReader(file);
 
         //then
         assertNotNull(inputFileReader);
@@ -52,7 +54,7 @@ public class InputFileReaderProviderTest {
     public void shouldReturnJsonFileReadaerIfFileHasJsonExtension(){
         //given
         File mockFile = mock(File.class);
-        when(mockFile.getName()).thenReturn("input2.json");
+        when(mockFile.getAbsolutePath()).thenReturn("input2.json");
 
         //when
         InputFileReader inputFileReader = inputFileReaderProvider.getInputFileReader(mockFile);
@@ -66,7 +68,7 @@ public class InputFileReaderProviderTest {
     public void shouldThrowIllegalArgumentExceptionIfFileHasOtherExtension(){
         //given
         File mockFile = mock(File.class);
-        when(mockFile.getName()).thenReturn("name.txt");
+        when(mockFile.getAbsolutePath()).thenReturn("name.txt");
 
         //when
         inputFileReaderProvider.getInputFileReader(mockFile);

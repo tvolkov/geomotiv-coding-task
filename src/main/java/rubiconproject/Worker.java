@@ -17,7 +17,7 @@ public class Worker {
         this.output = output;
     }
 
-    public void start(){
+    void start(){
         output.output(resultPrinter.printResult(inputDataProcessor.processInputData()));
     }
 }
