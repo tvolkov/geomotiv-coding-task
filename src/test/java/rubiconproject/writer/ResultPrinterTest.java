@@ -30,10 +30,10 @@ public class ResultPrinterTest {
     private List<Collection> inputData = new ArrayList<Collection>(){{
         add(new Collection("collection1", entries));
     }};
-    private static final String EXPECTED_RESULT = "{\"collectionId\":\"collection1\",\"sites\":[{\"name\":\"name\",\"score\":\"score\",\"keywords\":\"\",\"id\":\"1\",\"site_id\":\"1\",\"mobile\":\"mobile\"}]}";
+    private static final String EXPECTED_RESULT = "[{\"collectionId\":\"collection1\",\"sites\":[{\"name\":\"name\",\"score\":\"score\",\"keywords\":\"\",\"id\":\"1\",\"site_id\":\"1\",\"mobile\":\"mobile\"}]}]";
 
     private static final String LS = System.lineSeparator();
-    private static final String EXPECTED_PRETTY_RESULT = "{" + LS +
+    private static final String EXPECTED_PRETTY_RESULT = "[ {" + LS +
             "  \"collectionId\" : \"collection1\"," + LS +
             "  \"sites\" : [ {" + LS +
             "    \"name\" : \"name\"," + LS +
@@ -43,7 +43,7 @@ public class ResultPrinterTest {
             "    \"site_id\" : \"1\"," + LS +
             "    \"mobile\" : \"mobile\"" + LS +
             "  } ]" + LS +
-            "}";
+            "} ]";
 
     @Test
     public void shouldPrintCorrectResult(){
