@@ -36,14 +36,7 @@ beans {
     fileListProvider(FileListProvider, '${input.directory}')
     inputDataProcessor(InputDataProcessor, fileListProvider, inputFileReaderProvider)
 
-    if ('${print.location}' == 'console'){
-        output(ConsoleOutput)
-    } else if ('${print.location}' == 'file') {
-        output(FileOutput)
-    } else {
-//        throw new RuntimeException('${print.location}')
-        output(FileOutput, '${output.file}')
-    }
+    output(FileOutput, '${output.file}')
 
     resultPrinter(ResultPrinter)
 

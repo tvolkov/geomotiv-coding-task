@@ -20,12 +20,10 @@ public class ResultPrinter {
 
     public String printResult(List<Collection> result){
         StringBuilder stringBuilder = new StringBuilder();
-        for (Collection collection : result){
-            try {
-                stringBuilder.append(getWriter().writeValueAsString(collection));
-            } catch (IOException e) {
-                throw new RuntimeException("Error occurred during printing result: " + e.getMessage());
-            }
+        try {
+            stringBuilder.append(getWriter().writeValueAsString(result));
+        } catch (IOException e) {
+            throw new RuntimeException("Error occurred during printing result: " + e.getMessage());
         }
         return stringBuilder.toString();
     }
