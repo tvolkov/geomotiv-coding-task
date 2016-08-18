@@ -20,8 +20,6 @@ import static org.mockito.Mockito.when;
 public class InputFileReaderProviderTest {
     private InputFileReaderProvider inputFileReaderProvider;
 
-    private static final String FILE_NAME = "name.csv";
-
     @Autowired
     private BeanFactory beanFactory;
 
@@ -40,7 +38,7 @@ public class InputFileReaderProviderTest {
     public void shouldReturnCsvFileReaderIfFileHasCsvExtension(){
         //given
         File mockFile = mock(File.class);
-        when(mockFile.getName()).thenReturn(FILE_NAME);
+        when(mockFile.getName()).thenReturn("input1.csv");
 
         //when
         InputFileReader inputFileReader = inputFileReaderProvider.getInputFileReader(mockFile);
@@ -54,7 +52,7 @@ public class InputFileReaderProviderTest {
     public void shouldReturnJsonFileReadaerIfFileHasJsonExtension(){
         //given
         File mockFile = mock(File.class);
-        when(mockFile.getName()).thenReturn("name.json");
+        when(mockFile.getName()).thenReturn("input2.json");
 
         //when
         InputFileReader inputFileReader = inputFileReaderProvider.getInputFileReader(mockFile);

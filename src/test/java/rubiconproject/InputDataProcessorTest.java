@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
+import rubiconproject.processor.FileListProvider;
+import rubiconproject.processor.InputDataProcessor;
 import rubiconproject.reader.InputFileReader;
 import rubiconproject.reader.InputFileReaderProvider;
 

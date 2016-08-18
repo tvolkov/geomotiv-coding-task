@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
 @Component
 public class InputFileReaderProvider {
@@ -31,8 +32,12 @@ public class InputFileReaderProvider {
         throw new IllegalArgumentException("Only .csv and .json files are supported!");
     }
     private InputFileReader createCSVFileReader(String filename){
+        return (InputFileReader) beanFactory.getBean("csvFileReader", beanFactory.getBean("csvReader", createReader(filename)));
+    }
+
+    private Reader createReader(String filename){
         // the inputStreamReader could be define as a bean, but it's just easier to invoke it's constructor here
-        return (InputFileReader) beanFactory.getBean("csvFileReader", beanFactory.getBean("csvReader", new InputStreamReader(getClass().getResourceAsStream("/" + filename))));
+        return new InputStreamReader(getClass().getResourceAsStream("/" + filename));
     }
 
     private InputFileReader createJsonFileReader(String filename){

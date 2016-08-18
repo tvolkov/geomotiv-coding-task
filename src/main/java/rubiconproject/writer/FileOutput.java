@@ -15,7 +15,7 @@ public class FileOutput implements Output {
     }
 
     @Override
-    public void printOutput(String content) {
+    public void output(String content) {
         try (PrintWriter printWriter = new PrintWriter(new File(outputFile))){
             printWriter.println(content);
             printWriter.flush();

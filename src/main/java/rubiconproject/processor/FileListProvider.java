@@ -1,17 +1,17 @@
-package rubiconproject;
+package rubiconproject.processor;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-class FileListProvider {
+public class FileListProvider {
     private final File inputDirectory;
 
-    FileListProvider(File inputDirectory) {
+    public FileListProvider(File inputDirectory) {
         this.inputDirectory = inputDirectory;
     }
 
-    List<File> getInputFilesList() {
+    public List<File> getInputFilesList() {
         if (!inputDirectory.exists()) {
             throw new IllegalArgumentException("Directory " + inputDirectory + " doesn't exist");
         }

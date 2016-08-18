@@ -2,10 +2,10 @@ import au.com.bytecode.opencsv.CSVReader
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.config.ListFactoryBean
 import rubiconproject.reader.CSVFileReader
-import rubiconproject.FileListProvider
+import rubiconproject.processor.FileListProvider
 import rubiconproject.reader.InputFileReaderProvider
 import rubiconproject.reader.JsonFileReader
-import rubiconproject.InputDataProcessor
+import rubiconproject.processor.InputDataProcessor
 
 beans {
     xmlns context:"http://www.springframework.org/schema/context"

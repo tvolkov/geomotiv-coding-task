@@ -2,7 +2,7 @@ package rubiconproject.writer;
 
 public class ConsoleOutput implements Output {
     @Override
-    public void printOutput(String content) {
+    public void output(String content) {
         System.out.println(content);
     }
 }

@@ -1,6 +1,5 @@
-package rubiconproject;
+package rubiconproject.processor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import rubiconproject.model.Collection;
 import rubiconproject.reader.InputFileReaderProvider;
@@ -15,7 +14,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 /**
  * creates list of collection of entries. No exceptions are thrown in case of empty collections.
  */
-class InputDataProcessor {
+public class InputDataProcessor {
     private final FileListProvider fileListProvider;
     private final InputFileReaderProvider inputFileReaderProvider;
 
@@ -23,12 +22,12 @@ class InputDataProcessor {
 
     private final List<Collection> entries = new ArrayList<>();
 
-    InputDataProcessor(FileListProvider fileListProvider, InputFileReaderProvider inputFileReaderProvider) {
+    public InputDataProcessor(FileListProvider fileListProvider, InputFileReaderProvider inputFileReaderProvider) {
         this.fileListProvider = fileListProvider;
         this.inputFileReaderProvider = inputFileReaderProvider;
     }
 
-    List<Collection> processInputData(){
+    public List<Collection> processInputData(){
         List<File> inputFiles = fileListProvider.getInputFilesList();
         validateInputFiles(inputFiles);
         entries.addAll(inputFiles.stream().map(file -> inputFileReaderProvider.getInputFileReader(file).readFile(file.getName())).collect(Collectors.toList()));

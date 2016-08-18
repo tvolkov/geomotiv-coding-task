@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.keywordservice.KeywordService;
 import rubiconproject.model.Entry;
 

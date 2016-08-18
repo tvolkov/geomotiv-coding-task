@@ -1,10 +1,14 @@
 import au.com.bytecode.opencsv.CSVReader
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.config.ListFactoryBean
+import rubiconproject.Worker
 import rubiconproject.reader.CSVFileReader
-import rubiconproject.FileListProvider
+import rubiconproject.processor.FileListProvider
 import rubiconproject.reader.JsonFileReader
-import rubiconproject.InputDataProcessor
+import rubiconproject.processor.InputDataProcessor
+import rubiconproject.writer.ConsoleOutput
+import rubiconproject.writer.FileOutput
+import rubiconproject.writer.ResultPrinter
 
 beans {
     xmlns context:"http://www.springframework.org/schema/context"
@@ -30,4 +34,16 @@ beans {
 
     fileListProvider(FileListProvider, '${input.directory}')
     inputDataProcessor(InputDataProcessor, fileListProvider, inputFileReaderProvider)
+
+    if ('${print.location}' == 'console'){
+        output(ConsoleOutput)
+    } else if ('${print.location}' == 'file') {
+        output(FileOutput)
+    } else {
+        throw new RuntimeException("Invalid print.location value")
+    }
+
+    resultPrinter(ResultPrinter)
+
+    mainWorker(Worker, inputDataProcessor, resultPrinter, output)
 }

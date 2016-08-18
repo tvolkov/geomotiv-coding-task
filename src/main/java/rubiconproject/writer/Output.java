@@ -1,5 +1,5 @@
 package rubiconproject.writer;
 
 public interface Output {
-    void printOutput(String content);
+    void output(String content);
 }

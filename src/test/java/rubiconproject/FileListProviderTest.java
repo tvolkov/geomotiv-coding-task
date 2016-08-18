@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rubiconproject.processor.FileListProvider;
 
 import java.io.File;
 import java.util.Arrays;
