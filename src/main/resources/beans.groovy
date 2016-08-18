@@ -6,7 +6,6 @@ import rubiconproject.reader.CSVFileReader
 import rubiconproject.processor.FileListProvider
 import rubiconproject.reader.JsonFileReader
 import rubiconproject.processor.InputDataProcessor
-import rubiconproject.writer.ConsoleOutput
 import rubiconproject.writer.FileOutput
 import rubiconproject.writer.ResultPrinter
 

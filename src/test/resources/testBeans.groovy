@@ -10,7 +10,8 @@ import rubiconproject.processor.InputDataProcessor
 beans {
     xmlns context:"http://www.springframework.org/schema/context"
     context.'component-scan' 'base-package': "rubiconproject"
-    context.'property-placeholder'('location':"file:*.properties")
+//    context.'property-placeholder'('location':"file:*.properties")
+    context.'property-placeholder'('location':"classpath:application.properties")
 
     allowedFileExtensions(ListFactoryBean){
         sourceList = [".csv", ".json"]
