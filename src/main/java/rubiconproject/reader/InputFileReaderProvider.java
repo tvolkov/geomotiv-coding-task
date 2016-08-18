@@ -34,13 +34,13 @@ public class InputFileReaderProvider {
     }
 
     private Reader createReader(String filename){
-        //ideally this Reader should be a bean, for now I wil just create it directly because it's easy.
-        // Although it's not that easy to test it, since it has to be tested with real file, not mocked
         try {
-            return new InputStreamReader(new FileInputStream(filename));
+//            return new InputStreamReader(new FileInputStream(filename));
+            return (Reader) beanFactory.getBean("inputStreamReader", new FileInputStream(filename));
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("File " + filename + " does not exist");
         }
+
     }
 
     private InputFileReader createJsonFileReader(String filename){

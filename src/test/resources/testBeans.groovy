@@ -16,7 +16,12 @@ beans {
         sourceList = [".csv", ".json"]
     }
 
-    csvReader(CSVReader, new InputStreamReader(getClass().getResourceAsStream("/input1.csv"))) { bean ->
+    inputStreamReader(InputStreamReader, getClass().getResourceAsStream("/input1.csv")) { bean ->
+        bean.scope = 'prototype'
+    }
+
+//    csvReader(CSVReader, new InputStreamReader(getClass().getResourceAsStream("/input1.csv"))) { bean ->
+    csvReader(CSVReader, inputStreamReader) { bean ->
         bean.scope = 'prototype'
     }
     csvFileReader(CSVFileReader, csvReader) { bean ->
