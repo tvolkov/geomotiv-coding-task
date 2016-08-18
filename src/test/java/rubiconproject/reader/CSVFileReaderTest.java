@@ -26,6 +26,7 @@ public class CSVFileReaderTest {
     private static final String NAME = "example.com/csv1";
     private static final String MOBILE = "true";
     private static final String SCORE = "454";
+    private static final String[] CSV_HEADER = {"id", "name", "is mobile", "score"};
     private static final String[] MOCKED_CSV_LINE = {ID, NAME, MOBILE, SCORE};
 
     private static final String COLLECTION_ID = "collections1";
@@ -38,7 +39,7 @@ public class CSVFileReaderTest {
     @Test
     public void shouldeturnListOfParsedEntries() throws IOException {
         //given
-        when(mockedCsvReader.readNext()).thenReturn(MOCKED_CSV_LINE).thenReturn(null);
+        when(mockedCsvReader.readNext()).thenReturn(CSV_HEADER).thenReturn(MOCKED_CSV_LINE).thenReturn(null);
 
         //when
         Collection result = csvFileReader.readFile(COLLECTION_ID);

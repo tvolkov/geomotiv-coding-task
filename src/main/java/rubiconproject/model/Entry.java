@@ -8,23 +8,28 @@ import lombok.*;
  * The fields are of a string type to avoid unnecessary conversions, because no operations are to be done on the Entries
  */
 @RequiredArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Entry {
     @Getter
     @JsonProperty("site_id")
-    private final String Id;
+    @NonNull
+    private String Id;
 
     @Getter
     @JsonProperty("name")
-    private final String name;
+    @NonNull
+    private String name;
 
     @Getter
     @JsonProperty("mobile")
-    private final String isMobile;
+    @NonNull
+    private String isMobile;
 
     @Getter
     @JsonProperty("score")
-    private final String score;
+    @NonNull
+    private String score;
 
     @Getter
     @Setter
