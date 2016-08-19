@@ -54,6 +54,7 @@ jar {
     }
 }
 
+//currently there're some problems building properly working jar using gradle, so the following task can be ignored
 shadowJar {
     mergeServiceFiles {
         path = 'META-INF'
