@@ -42,7 +42,7 @@ public class InputDataProcessor {
     private void validateInputFiles(List<File> inputFiles) {
         //as per requirements, there should only be 2 input files
         if (inputFiles.size() != 2){
-            throw new IllegalStateException("There are no iles in the input directory");
+            throw new IllegalStateException("There are no files in the input directory");
         }
         if (!(endsWithAny(inputFiles.get(0).getName(), allowedFileExtensions) || endsWithAny(inputFiles.get(1).getName(), allowedFileExtensions))){
             throw new IllegalArgumentException("Incorrect file extensions");

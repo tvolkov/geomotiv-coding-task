@@ -5,6 +5,9 @@ import rubiconproject.processor.InputDataProcessor;
 import rubiconproject.writer.Output;
 import rubiconproject.writer.ResultPrinter;
 
+/**
+ * main workflow
+ */
 public class Worker {
     private InputDataProcessor inputDataProcessor;
     private ResultPrinter resultPrinter;

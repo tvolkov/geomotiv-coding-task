@@ -1,14 +1,12 @@
 package rubiconproject.keywordservice;
 
-import rubiconproject.model.Entry;
-
 import java.util.Map;
 
 public class DummyKeywordService implements KeywordService {
 
     private final Map<Integer, String> keywords;
 
-    private static final int MASK = 7; //we will only distinguish three types of ids
+    private static final int MASK = 7; //for the sake of simplicity we will only distinguish three types of ids
 
 
     public DummyKeywordService(Map<Integer, String> keywords) {
