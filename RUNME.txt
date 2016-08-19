@@ -1,0 +1,8 @@
+  - build:
+ gradlew clean compileJava processResources
+
+  - run tests:
+  gradlew test
+
+  - run program:
+  gradlew execute -Dexec.args=input,output.json
