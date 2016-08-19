@@ -11,7 +11,7 @@ import rubiconproject.writer.ResultPrinter
 
 beans {
     xmlns context:"http://www.springframework.org/schema/context"
-    context.'component-scan' 'base-package': "rubiconproject"
+    context.'component-scan' 'base-package': 'rubiconproject'
     context.'property-placeholder'('location':'classpath:application.properties')
 
     importBeans "classpath:readerBeans.groovy"
@@ -35,11 +35,11 @@ beans {
 
     inputDataKeywordsProvider(InputDataKeywordsProvider, keywordService)
 
-    inputDataProcessor(InputDataProcessor, fileListProvider, inputFileReaderProvider)
+    inputDataProcessor(InputDataProcessor, fileListProvider, inputFileReaderProvider, inputDataKeywordsProvider)
 
     output(FileOutput, '${output.file}')
 
-    resultPrinter(ResultPrinter)
+    resultPrinter(ResultPrinter, objectMapper)
 
     mainWorker(Worker, inputDataProcessor, resultPrinter, output)
 }

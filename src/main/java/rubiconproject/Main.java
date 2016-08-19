@@ -20,6 +20,9 @@ public class Main {
     }
 
     private static void injectProperties(String[] args, GenericGroovyApplicationContext applicationContext){
+        if (args.length != 2){
+            throw new IllegalArgumentException("Incorrect number of arguments");
+        }
         PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
         Properties properties = new Properties();
         properties.setProperty("input.directory", args[0]);
