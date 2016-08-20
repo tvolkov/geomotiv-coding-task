@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.BeanFactory;
@@ -27,15 +28,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class InputFileReaderProviderTest {
 
+    @InjectMocks
     private InputFileReaderProvider inputFileReaderProvider;
 
     @Mock
     private BeanFactory beanFactory;
-
-    @Before
-    public void setUp(){
-        inputFileReaderProvider = new InputFileReaderProvider(beanFactory);
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionIfFileIsNull(){

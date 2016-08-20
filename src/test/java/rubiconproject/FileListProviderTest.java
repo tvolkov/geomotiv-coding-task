@@ -3,6 +3,7 @@ package rubiconproject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.processor.FileListProvider;
@@ -17,15 +18,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FileListProviderTest {
+    @InjectMocks
     private FileListProvider fileListProvider;
 
     @Mock
     private File mockedInputDirectory;
-
-    @Before
-    public void setUp(){
-        this.fileListProvider = new FileListProvider(mockedInputDirectory);
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionIfDirectoryDoesNotExist(){

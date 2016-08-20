@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.model.Entry;
@@ -17,17 +18,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class InputDataKeywordsProviderTest {
 
+    @InjectMocks
     private InputDataKeywordsProvider inputDataKeywordsProvider;
 
     @Mock
     private KeywordService mockKeywordService;
 
     private static final String TEST_KEYWORD = "test";
-
-    @Before
-    public void setUp(){
-        inputDataKeywordsProvider = new InputDataKeywordsProvider(mockKeywordService);
-    }
 
     @Test
     public void shouldResolveKeywordsForGivenEntires(){
@@ -48,7 +45,7 @@ public class InputDataKeywordsProviderTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenEntryListIsEmpty(){
         //when
-        inputDataKeywordsProvider.provideKeywords(Collections.EMPTY_LIST);
+        inputDataKeywordsProvider.provideKeywords(Collections.emptyList());
     }
 
     @Test(expected = IllegalArgumentException.class)

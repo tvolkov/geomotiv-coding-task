@@ -9,6 +9,10 @@ import rubiconproject.model.Collection;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Prints collections in a json format.
+ * I didn't make it print one json object per line (as stated in the requirements). I can add it later, if it's really needed
+ */
 public class ResultPrinter {
 
     private final ObjectMapper objectMapper;

@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.model.Collection;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CSVFileReaderTest {
+    @InjectMocks
     private CSVFileReader csvFileReader;
 
     @Mock
@@ -30,11 +32,6 @@ public class CSVFileReaderTest {
     private static final String[] MOCKED_CSV_LINE = {ID, NAME, MOBILE, SCORE};
 
     private static final String COLLECTION_ID = "collections1";
-
-    @Before
-    public void setUp(){
-        csvFileReader = new CSVFileReader(mockedCsvReader);
-    }
 
     @Test
     public void shouldeturnListOfParsedEntries() throws IOException {

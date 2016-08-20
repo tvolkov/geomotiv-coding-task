@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InputDataProcessorTest {
+    @InjectMocks
     private InputDataProcessor inputDataProcessor;
 
     @Mock
@@ -45,15 +47,13 @@ public class InputDataProcessorTest {
 
     @Before
     public void setUp(){
-        when(mockInputDataKeywordsProvider.provideKeywords(anyListOf(Entry.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
-        inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider, mockInputDataKeywordsProvider);
         inputDataProcessor.setAllowedFileExtensions(ALLOWED_EXTENSIONS);
     }
 
     @Test(expected = IllegalStateException.class)
     public void shouldThrowIllegalStateExceptionIfThereAre0InputFiles(){
         //given
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.EMPTY_LIST);
+        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.emptyList());
 
         //when
         inputDataProcessor.processInputData();
