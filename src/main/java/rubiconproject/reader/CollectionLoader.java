@@ -19,7 +19,6 @@ public class CollectionLoader {
      * prototype beans which will result in exception since some of the prototype beans are defined with the dummy constructor args,
      * which are not supposed to be passed in their constructors
      * So, despite the fact that having bean names in code is bad idea, I think this is most optimal trade-off in this situation
-     *
      */
     private final Map<String, String> beanAliases;
 
