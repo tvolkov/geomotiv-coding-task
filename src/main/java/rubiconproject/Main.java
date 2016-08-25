@@ -6,7 +6,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericGroovyApplicationContext;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 @Slf4j
 public class Main {
@@ -20,6 +22,10 @@ public class Main {
     }
 
     private static void injectProperties(String[] args, GenericGroovyApplicationContext applicationContext){
+        //todo: csv reader - copmly to srp
+        // support multithreading
+        // refactor inputdatareaderprovider
+        // stateless
         if (args.length != 2){
             throw new IllegalArgumentException("Incorrect number of arguments");
         }

@@ -41,22 +41,10 @@ public class InputDataProcessorTest {
     private static final String COLLECTION1 = "collection1.csv";
     private static final String COLLECTION2 = "collection2.json";
 
-    private static final String[] ALLOWED_EXTENSIONS = {".csv", ".json"};
-
     @Before
     public void setUp(){
         when(mockInputDataKeywordsProvider.provideKeywords(anyListOf(Entry.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
         inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider, mockInputDataKeywordsProvider);
-        inputDataProcessor.setAllowedFileExtensions(ALLOWED_EXTENSIONS);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void shouldThrowIllegalStateExceptionIfThereAre0InputFiles(){
-        //given
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.EMPTY_LIST);
-
-        //when
-        inputDataProcessor.processInputData();
     }
 
     @Test
@@ -97,5 +85,17 @@ public class InputDataProcessorTest {
         assertEquals(2, resultEntries.size());
         assertEquals(entry3, resultEntries.get(0));
         assertEquals(entry4, resultEntries.get(1));
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfNoInputFilesFound(){
+        //given
+        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.EMPTY_LIST);
+
+        //when
+        List<Collection> result = inputDataProcessor.processInputData();
+
+        //then
+        assertEquals(0, result.size());
     }
 }

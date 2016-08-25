@@ -12,9 +12,11 @@ import java.util.List;
 @Slf4j
 public class FileListProvider {
     private final File inputDirectory;
+    private final InputFileValidator inputFileValidator;
 
-    public FileListProvider(File inputDirectory) {
+    public FileListProvider(File inputDirectory, InputFileValidator inputFileValidator) {
         this.inputDirectory = inputDirectory;
+        this.inputFileValidator = inputFileValidator;
         log.debug("initialized with inputDirectory " + inputDirectory);
     }
 
@@ -34,7 +36,7 @@ public class FileListProvider {
 
         List<File> inputFiles = new ArrayList<>();
         for (File file : files)
-            if (file.isFile()) {
+            if (inputFileValidator.isFileValid(file)) {
                 inputFiles.add(file);
             }
 
