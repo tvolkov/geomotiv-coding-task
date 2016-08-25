@@ -3,7 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.config.ListFactoryBean
 import rubiconproject.reader.CSVFileReader
 import rubiconproject.processor.FileListProvider
-import rubiconproject.reader.InputFileReaderProvider
+
 import rubiconproject.reader.JsonFileReader
 import rubiconproject.processor.InputDataProcessor
 

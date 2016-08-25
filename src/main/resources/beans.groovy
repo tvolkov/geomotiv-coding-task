@@ -1,11 +1,14 @@
 
 import org.springframework.beans.factory.config.ListFactoryBean
 import org.springframework.beans.factory.config.MapFactoryBean
+import org.springframework.core.io.ClassPathResource
 import rubiconproject.Worker
 import rubiconproject.keywordservice.DummyKeywordService
 import rubiconproject.keywordservice.InputDataKeywordsProvider
 import rubiconproject.processor.FileListProvider
 import rubiconproject.processor.InputDataProcessor
+import rubiconproject.processor.InputFileValidator
+import rubiconproject.reader.CollectionLoader
 import rubiconproject.writer.FileOutput
 import rubiconproject.writer.ResultPrinter
 
@@ -14,13 +17,19 @@ beans {
     context.'component-scan' 'base-package': 'rubiconproject'
     context.'property-placeholder'('location':'classpath:application.properties')
 
+
+    def properties = new Properties()
+    properties.load(new ClassPathResource('application.properties').inputStream);
+
     importBeans "classpath:readerBeans.groovy"
 
     allowedFileExtensions(ListFactoryBean){
         sourceList = [".csv", ".json"]
     }
 
-    fileListProvider(FileListProvider, '${input.directory}')
+    inputFileValidator(InputFileValidator)
+
+    fileListProvider(FileListProvider, properties.'input.directory', inputFileValidator)
 
 
     dummyKeywordsMap(MapFactoryBean){
@@ -35,9 +44,18 @@ beans {
 
     inputDataKeywordsProvider(InputDataKeywordsProvider, keywordService)
 
-    inputDataProcessor(InputDataProcessor, fileListProvider, inputFileReaderProvider, inputDataKeywordsProvider)
+    beanAliasesMap(MapFactoryBean){
+        sourceMap = [
+                'csv': 'csvFileReader',
+                'json': 'jsonFileReader',
+        ]
+    }
 
-    output(FileOutput, '${output.file}')
+    collectionLoader(CollectionLoader, inputFileReaderFactory, beanAliasesMap)
+
+    inputDataProcessor(InputDataProcessor, fileListProvider, inputDataKeywordsProvider, collectionLoader)
+
+    output(FileOutput, properties.'output.file')
 
     resultPrinter(ResultPrinter, objectMapper)
 

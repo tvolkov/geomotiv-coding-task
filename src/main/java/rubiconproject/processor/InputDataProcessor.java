@@ -3,7 +3,7 @@ package rubiconproject.processor;
 import lombok.extern.slf4j.Slf4j;
 import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.model.Collection;
-import rubiconproject.reader.InputFileReaderProvider;
+import rubiconproject.reader.CollectionLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class InputDataProcessor {
     private final FileListProvider fileListProvider;
-    private final InputFileReaderProvider inputFileReaderProvider;
     private final InputDataKeywordsProvider inputDataKeywordsProvider;
+    private final CollectionLoader collectionLoader;
 
-    public InputDataProcessor(FileListProvider fileListProvider, InputFileReaderProvider inputFileReaderProvider, InputDataKeywordsProvider inputDataKeywordsProvider) {
+    public InputDataProcessor(FileListProvider fileListProvider, InputDataKeywordsProvider inputDataKeywordsProvider, CollectionLoader collectionLoader) {
         this.fileListProvider = fileListProvider;
-        this.inputFileReaderProvider = inputFileReaderProvider;
         this.inputDataKeywordsProvider = inputDataKeywordsProvider;
+        this.collectionLoader = collectionLoader;
     }
 
     public List<Collection> processInputData(){
@@ -38,9 +38,12 @@ public class InputDataProcessor {
 
     private List<Collection> process(List<File> inputFiles){
         log.info("processing " + inputFiles.size() + " input files");
-        List<Collection> entries = new ArrayList<>();
-        entries.addAll(inputFiles.stream().map(file -> inputFileReaderProvider.getInputFileReader(file).readFile(file.getName())).collect(Collectors.toList()));
-        entries.forEach(collection -> inputDataKeywordsProvider.provideKeywords(collection.getEntries()));
-        return entries;
+        List<Collection> collections = new ArrayList<>();
+
+        collections.addAll(inputFiles.stream()
+                .map(file -> collectionLoader.loadCollection(file.getName()))
+                .collect(Collectors.toList()));
+        collections.forEach(collection -> inputDataKeywordsProvider.provideKeywords(collection.getEntries()));
+        return collections;
     }
 }

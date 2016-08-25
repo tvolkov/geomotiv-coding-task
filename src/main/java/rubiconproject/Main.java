@@ -12,31 +12,23 @@ import java.util.Set;
 
 @Slf4j
 public class Main {
+    // todo upport multithreading
+    // todo stateless
+
+    /**
+     * I have moved progam arguments from the 'args' array to property file.
+     * Otherwise, if we would inject the 'args' to application context, then
+     * applicationContext.refresh()
+     * shoul have been invoked, which would lead to unnecessary prototype bean initialization, will result in
+     * exception since some of the prototype beans are defined with the dummy constructor args,
+     * which are not supposed to be passed in their constructors
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println(Arrays.toString(args));
-        GenericGroovyApplicationContext applicationContext = new GenericGroovyApplicationContext();
-        injectProperties(args, applicationContext);
+        GenericGroovyApplicationContext applicationContext = new GenericGroovyApplicationContext("classpath:beans.groovy");
         Worker worker = applicationContext.getBean("mainWorker",  Worker.class);
         log.info("start");
         worker.start();
-    }
-
-    private static void injectProperties(String[] args, GenericGroovyApplicationContext applicationContext){
-        //todo: csv reader - copmly to srp
-        // support multithreading
-        // refactor inputdatareaderprovider
-        // stateless
-        if (args.length != 2){
-            throw new IllegalArgumentException("Incorrect number of arguments");
-        }
-        PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-        Properties properties = new Properties();
-        properties.setProperty("input.directory", args[0]);
-        properties.setProperty("output.file", args[1]);
-        propertyPlaceholderConfigurer.setProperties(properties);
-        propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
-        applicationContext.addBeanFactoryPostProcessor(propertyPlaceholderConfigurer);
-        applicationContext.load("classpath:beans.groovy");
-        applicationContext.refresh();
     }
 }

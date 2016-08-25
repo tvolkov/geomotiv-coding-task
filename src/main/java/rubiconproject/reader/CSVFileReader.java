@@ -1,14 +1,13 @@
 package rubiconproject.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
-import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class CSVFileReader implements InputFileReader {
+public class CSVFileReader implements InputFileReader {
     private static final int ID_INDEX = 0;
     private static final int NAME_INDEX = 1;
     private static final int MOBILE_INDEX = 2;
@@ -21,7 +20,7 @@ class CSVFileReader implements InputFileReader {
     }
 
     @Override
-    public Collection readFile(final String collectionId) {
+    public List<Entry> readFile() {
         List<Entry> resultList = new ArrayList<>();
         try {
             String[] line;
@@ -32,6 +31,6 @@ class CSVFileReader implements InputFileReader {
             throw new RuntimeException("Error occurred while parsing file: " + e.getMessage());
         }
         //return the tail of resultList to get rid of csv header
-        return new Collection(collectionId, resultList.subList(1, resultList.size()));
+        return resultList.subList(1, resultList.size());
     }
 }

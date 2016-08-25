@@ -1,6 +1,8 @@
 import au.com.bytecode.opencsv.CSVReader
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.config.ServiceLocatorFactoryBean
 import rubiconproject.reader.CSVFileReader
+import rubiconproject.reader.InputFileReaderFactory
 import rubiconproject.reader.JsonFileReader
 
 beans {
@@ -8,7 +10,7 @@ beans {
     context.'component-scan' 'base-package': "rubiconproject"
     context.'property-placeholder'('location':'classpath:application.properties')
 
-    inputStream(FileInputStream, getClass().getResourceAsStream("/input1.csv")){ bean ->
+    inputStream(FileInputStream, "dummy"){ bean ->
         bean.scope = 'prototype'
     }
 
@@ -25,7 +27,11 @@ beans {
 
     objectMapper(ObjectMapper)
 
-    jsonFileReader(JsonFileReader, "input2.json", objectMapper) { bean ->
+    jsonFileReader(JsonFileReader, "dummy", objectMapper) { bean ->
         bean.scope = 'prototype'
+    }
+
+    inputFileReaderFactory(ServiceLocatorFactoryBean) {
+        serviceLocatorInterface = InputFileReaderFactory.class
     }
 }

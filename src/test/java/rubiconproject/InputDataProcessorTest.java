@@ -5,9 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
@@ -44,7 +42,7 @@ public class InputDataProcessorTest {
     @Before
     public void setUp(){
         when(mockInputDataKeywordsProvider.provideKeywords(anyListOf(Entry.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
-        inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider, mockInputDataKeywordsProvider);
+        inputDataProcessor = new InputDataProcessor(mockedFileListProvider, mockedInputFileReaderProvider, mockInputDataKeywordsProvider, collectionLoader);
     }
 
     @Test
@@ -90,7 +88,7 @@ public class InputDataProcessorTest {
     @Test
     public void shouldReturnEmptyListIfNoInputFilesFound(){
         //given
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.EMPTY_LIST);
+        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.emptyList());
 
         //when
         List<Collection> result = inputDataProcessor.processInputData();

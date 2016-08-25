@@ -1,10 +1,12 @@
 package rubiconproject.reader;
 
-import rubiconproject.model.Collection;
+import rubiconproject.model.Entry;
+
+import java.util.List;
 
 /**
  * this is a contract of reading input files: reader gets a collection name and returns collection of entries with that name
  */
 public interface InputFileReader {
-    Collection readFile(String collectionName);
+    List<Entry> readFile();
 }
