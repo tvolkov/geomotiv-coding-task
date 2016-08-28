@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Returns list of files in the given directory
+ * Returns list of file names in the given directory
  */
 @Slf4j
 public class FileListProvider {

@@ -16,4 +16,6 @@
 
     <alias name="csvFileReader" alias="csv"/>
     <alias name="jsonFileReader" alias="json"/>
+
+    <bean id="inputFileReaderFactory" class="rubiconproject.reader.InputFileReaderFactory"/>
 </beans>

@@ -1,34 +1,33 @@
 package rubiconproject;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.GenericGroovyApplicationContext;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
 
+/**
+ * I have moved progam arguments from the 'args' array to property file.
+ * Otherwise, if we would inject the 'args' from command line to application context, then
+ * applicationContext.refresh()
+ * should be invoked, which will lead to unnecessary prototype bean initialization, and result in
+ * uncaught exception since some of the prototype beans are defined with the dummy constructor args,
+ * which are not supposed to be passed in their constructors
+ *
+ * Also, I decided to give up the idea of using groovy config, since there're a few things which groovy config
+ * is missing, comparing to xml.
+ * For instance, I didn't find a way to declare bean aliases in groovy.
+ * Also, intellij idea doesn't recognize bean definitions written in groovy, which is inconvenient.
+ *
+ * Java/Annotation config is something  don't like, because I think it's good to completely separate
+ * code and configuration - that's where groovy/xml config fits perfectly
+ *
+ */
 @Slf4j
 public class Main {
-    // todo support multithreading
-
-    /**
-     * I have moved progam arguments from the 'args' array to property file.
-     * Otherwise, if we would inject the 'args' to application context, then
-     * applicationContext.refresh()
-     * shoul have been invoked, which would lead to unnecessary prototype bean initialization, will result in
-     * exception since some of the prototype beans are defined with the dummy constructor args,
-     * which are not supposed to be passed in their constructors
-     * @param args
-     */
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(args));
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:beans.xml");
         Worker worker = applicationContext.getBean("mainWorker",  Worker.class);
-        //todo log messages do now show when running via gradle
         log.info("start");
         worker.start();
     }

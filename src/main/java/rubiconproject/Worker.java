@@ -9,9 +9,9 @@ import rubiconproject.writer.ResultPrinter;
  * main workflow
  */
 public class Worker {
-    private InputDataProcessor inputDataProcessor;
-    private ResultPrinter resultPrinter;
-    private Output output;
+    private final InputDataProcessor inputDataProcessor;
+    private final ResultPrinter resultPrinter;
+    private final Output output;
 
     @Autowired
     public Worker(InputDataProcessor inputDataProcessor, ResultPrinter resultPrinter, Output output) {

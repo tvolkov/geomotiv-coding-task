@@ -10,12 +10,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.model.Collection;
 import rubiconproject.model.Entry;
-import rubiconproject.processor.FileListProvider;
-import rubiconproject.processor.InputDataProcessor;
 import rubiconproject.reader.CollectionLoader;
 import rubiconproject.reader.InputFileReader;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 

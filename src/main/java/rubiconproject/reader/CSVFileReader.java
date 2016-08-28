@@ -23,6 +23,7 @@ public class CSVFileReader implements InputFileReader {
 
     @Override
     public List<Entry> readFile() {
+        log.info("thread id: " + Thread.currentThread().getId());
         List<Entry> resultList = new ArrayList<>();
         try {
             String[] line;

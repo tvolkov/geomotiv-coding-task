@@ -1,5 +1,6 @@
 package rubiconproject.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import rubiconproject.model.Collection;
 
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.File;
 /**
  * Loads the collection of Entry's from either csv of json file
  */
+@Slf4j
 public class CollectionLoader {
     private final InputFileReaderFactory inputFileReaderFactory;
 
