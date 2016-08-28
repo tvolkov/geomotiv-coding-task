@@ -2,6 +2,8 @@ package rubiconproject.reader;
 
 import rubiconproject.model.Collection;
 
+import java.io.File;
+
 /**
  * Loads the collection of Entry's from either csv of json file
  */
@@ -22,9 +24,13 @@ public class CollectionLoader {
         this.inputFileReaderFactory = inputFileReaderFactory;
     }
 
-    public Collection loadCollection(String fileName){
-        InputFileReader inputFileReader = inputFileReaderFactory.getReader(getBeanAlias(fileName), fileName);
-        return new Collection(fileName, inputFileReader.readFile());
+    public Collection loadCollection(String filePath){
+        InputFileReader inputFileReader = inputFileReaderFactory.getReader(getBeanAlias(filePath), filePath);
+        return new Collection(extractFileName(filePath), inputFileReader.readFile());
+    }
+
+    private String extractFileName(String filePath) {
+        return filePath.substring(filePath.lastIndexOf(File.separator) + 1);
     }
 
     private String getBeanAlias(String fileName) {

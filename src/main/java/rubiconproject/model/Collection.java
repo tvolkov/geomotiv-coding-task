@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * Collections of entires
+ * Collections of entries
  */
 @AllArgsConstructor
 @ToString

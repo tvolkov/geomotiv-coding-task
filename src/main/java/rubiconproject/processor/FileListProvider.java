@@ -15,14 +15,13 @@ public class FileListProvider {
     private final InputFileValidator inputFileValidator;
 
     public FileListProvider(File inputDirectory, InputFileValidator inputFileValidator) {
-        //todo make it a string
         this.inputDirectory = inputDirectory;
         this.inputFileValidator = inputFileValidator;
         log.debug("initialized with inputDirectory " + inputDirectory);
     }
 
     //todo return file names instead of files
-    public List<File> getInputFilesList() {
+    public List<String> getInputFilesList() {
         if (!inputDirectory.exists()) {
             throw new IllegalArgumentException("Directory " + inputDirectory + " doesn't exist");
         }
@@ -36,10 +35,10 @@ public class FileListProvider {
             throw new IllegalStateException("Can't read files from directory");
         }
 
-        List<File> inputFiles = new ArrayList<>();
+        List<String> inputFiles = new ArrayList<>();
         for (File file : files)
             if (inputFileValidator.isFileValid(file)) {
-                inputFiles.add(file);
+                inputFiles.add(file.getPath());
             }
 
         return inputFiles;

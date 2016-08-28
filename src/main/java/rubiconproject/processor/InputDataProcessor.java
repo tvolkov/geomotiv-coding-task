@@ -27,7 +27,7 @@ public class InputDataProcessor {
     }
 
     public List<Collection> processInputData(){
-        List<File> inputFiles = fileListProvider.getInputFilesList();
+        List<String> inputFiles = fileListProvider.getInputFilesList();
         if (inputFiles.size() == 0){
             log.info("no input files found. exiting");
             return Collections.emptyList();
@@ -36,12 +36,12 @@ public class InputDataProcessor {
         return process(inputFiles);
     }
 
-    private List<Collection> process(List<File> inputFiles){
-        log.info("processing " + inputFiles.size() + " input files");
+    private List<Collection> process(List<String> inputFilesList){
+        log.info("processing " + inputFilesList.size() + " input files");
         List<Collection> collections = new ArrayList<>();
 
-        collections.addAll(inputFiles.stream()
-                .map(file -> collectionLoader.loadCollection(file.getPath()))
+        collections.addAll(inputFilesList.stream()
+                .map(collectionLoader::loadCollection)
                 .collect(Collectors.toList()));
         collections.forEach(collection -> inputDataKeywordsProvider.provideKeywords(collection.getEntries()));
         return collections;
