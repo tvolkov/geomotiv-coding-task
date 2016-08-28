@@ -31,20 +31,17 @@ public class CSVFileReaderTest {
     private static final String[] CSV_HEADER = {"id", "name", "is mobile", "score"};
     private static final String[] MOCKED_CSV_LINE = {ID, NAME, MOBILE, SCORE};
 
-    private static final String COLLECTION_ID = "collections1";
-
     @Test
     public void shouldeturnListOfParsedEntries() throws IOException {
         //given
         when(mockedCsvReader.readNext()).thenReturn(CSV_HEADER).thenReturn(MOCKED_CSV_LINE).thenReturn(null);
 
         //when
-        Collection result = csvFileReader.readFile(COLLECTION_ID);
+        List<Entry> result = csvFileReader.readFile();
 
         //then
-        assertEquals(COLLECTION_ID, result.getCollectionId());
-        assertEquals(1, result.getEntries().size());
-        Entry entry = result.getEntries().get(0);
+        assertEquals(1, result.size());
+        Entry entry = result.get(0);
         assertEquals(ID, entry.getId());
         assertEquals(NAME, entry.getName());
         assertEquals(MOBILE, entry.getIsMobile());
@@ -57,6 +54,6 @@ public class CSVFileReaderTest {
         when(mockedCsvReader.readNext()).thenThrow(IOException.class);
 
         //when
-        csvFileReader.readFile(COLLECTION_ID);
+        csvFileReader.readFile();
     }
 }

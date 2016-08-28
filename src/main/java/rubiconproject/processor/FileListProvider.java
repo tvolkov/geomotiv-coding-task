@@ -20,7 +20,6 @@ public class FileListProvider {
         log.debug("initialized with inputDirectory " + inputDirectory);
     }
 
-    //todo return file names instead of files
     public List<String> getInputFilesList() {
         if (!inputDirectory.exists()) {
             throw new IllegalArgumentException("Directory " + inputDirectory + " doesn't exist");

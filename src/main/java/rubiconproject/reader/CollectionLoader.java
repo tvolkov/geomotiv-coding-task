@@ -30,7 +30,11 @@ public class CollectionLoader {
     }
 
     private String extractFileName(String filePath) {
-        return filePath.substring(filePath.lastIndexOf(File.separator) + 1);
+        int lastIndexOfFileSeparator = filePath.lastIndexOf(File.separator);
+        if (lastIndexOfFileSeparator == -1){
+            return filePath;
+        }
+        return filePath.substring(lastIndexOfFileSeparator + 1);
     }
 
     private String getBeanAlias(String fileName) {

@@ -14,7 +14,6 @@ import java.util.Set;
 @Slf4j
 public class Main {
     // todo support multithreading
-    // todo stateless
 
     /**
      * I have moved progam arguments from the 'args' array to property file.
@@ -29,6 +28,7 @@ public class Main {
         System.out.println(Arrays.toString(args));
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:beans.xml");
         Worker worker = applicationContext.getBean("mainWorker",  Worker.class);
+        //todo log messages do now show when running via gradle
         log.info("start");
         worker.start();
     }

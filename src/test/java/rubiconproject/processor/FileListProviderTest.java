@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.processor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -68,19 +68,21 @@ public class FileListProviderTest {
 
         File mockedFile1 = mock(File.class);
         when(mockedFile1.isFile()).thenReturn(true);
+        when(mockedFile1.getPath()).thenReturn("path1");
         File mockedFile2 = mock(File.class);
         when(mockedFile2.isFile()).thenReturn(true);
+        when(mockedFile2.getPath()).thenReturn("path2");
         File[] mockedFiles = {mockedFile1, mockedFile2};
         when(mockedInputDirectory.listFiles()).thenReturn(mockedFiles);
         when(inputFileValidator.isFileValid(mockedFile1)).thenReturn(true);
         when(inputFileValidator.isFileValid(mockedFile2)).thenReturn(true);
 
         //when
-        List<File> result = fileListProvider.getInputFilesList();
+        List<String> result = fileListProvider.getInputFilesList();
 
         //then
         assertEquals(mockedFiles.length, result.size());
-        assertEquals(Arrays.asList(mockedFiles), result);
+        assertEquals(Arrays.asList("path1", "path2"), result);
     }
 
     @Test
@@ -91,6 +93,7 @@ public class FileListProviderTest {
 
         File mockedFile1 = mock(File.class);
         when(mockedFile1.isFile()).thenReturn(true);
+        when(mockedFile1.getPath()).thenReturn("path1");
         File mockedFile2 = mock(File.class);
         when(mockedFile2.isFile()).thenReturn(true);
         File[] mockedFiles = {mockedFile1, mockedFile2};
@@ -99,10 +102,10 @@ public class FileListProviderTest {
         when(inputFileValidator.isFileValid(mockedFile2)).thenReturn(false);
 
         //when
-        List<File> result = fileListProvider.getInputFilesList();
+        List<String> result = fileListProvider.getInputFilesList();
 
         //then
         assertEquals(1, result.size());
-        assertEquals(mockedFile1, result.get(0));
+        assertEquals("path1", result.get(0));
     }
 }
