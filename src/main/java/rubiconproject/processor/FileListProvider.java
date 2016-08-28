@@ -15,6 +15,7 @@ public class FileListProvider {
     private final InputFileValidator inputFileValidator;
 
     public FileListProvider(File inputDirectory, InputFileValidator inputFileValidator) {
+        //todo make it a string
         this.inputDirectory = inputDirectory;
         this.inputFileValidator = inputFileValidator;
         log.debug("initialized with inputDirectory " + inputDirectory);

@@ -1,12 +1,14 @@
 package rubiconproject.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
+import lombok.extern.slf4j.Slf4j;
 import rubiconproject.model.Entry;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class CSVFileReader implements InputFileReader {
     private static final int ID_INDEX = 0;
     private static final int NAME_INDEX = 1;
@@ -32,5 +34,16 @@ public class CSVFileReader implements InputFileReader {
         }
         //return the tail of resultList to get rid of csv header
         return resultList.subList(1, resultList.size());
+    }
+
+    public static CSVFileReader createInstance(String pathToFile) {
+        try {
+            InputStreamReader inputStreamReader  = new InputStreamReader(new FileInputStream(pathToFile));
+            CSVReader csvReader = new CSVReader(inputStreamReader);
+            return new CSVFileReader(csvReader);
+        } catch (FileNotFoundException e){
+            log.error("Unable to initialize CSVFileReader: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

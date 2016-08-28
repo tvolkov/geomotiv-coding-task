@@ -3,6 +3,7 @@ package rubiconproject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericGroovyApplicationContext;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Slf4j
 public class Main {
-    // todo upport multithreading
+    // todo support multithreading
     // todo stateless
 
     /**
@@ -26,7 +27,7 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println(Arrays.toString(args));
-        GenericGroovyApplicationContext applicationContext = new GenericGroovyApplicationContext("classpath:beans.groovy");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:beans.xml");
         Worker worker = applicationContext.getBean("mainWorker",  Worker.class);
         log.info("start");
         worker.start();

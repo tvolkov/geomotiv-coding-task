@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <context:component-scan base-package="rubiconproject"/>
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <import resource="classpath:readerBeans.xml" />
+
+    <util:list id="allowedFileExtensions" value-type="java.lang.String">
+        <value>.csv</value>
+        <value>.json</value>
+    </util:list>
+
+    <bean id="inputFileValidator" class="rubiconproject.processor.InputFileValidator"/>
+
+    <bean id="fileListProvider" class="rubiconproject.processor.FileListProvider">
+        <constructor-arg value="${input.directory}"/>
+        <constructor-arg ref="inputFileValidator"/>
+    </bean>
+
+    <util:map id="dummyKeywordsMap">
+        <entry key="0" value="sports,tennis,recreation" />
+        <entry key="1" value="japan,travel" />
+        <entry key="2" value="guitar,music" />
+    </util:map>
+
+    <bean id="keywordService" class="rubiconproject.keywordservice.DummyKeywordService">
+        <constructor-arg ref="dummyKeywordsMap"/>
+    </bean>
+
+    <bean id="inputDataKeywordsProvider" class="rubiconproject.keywordservice.InputDataKeywordsProvider">
+        <constructor-arg ref="keywordService"/>
+    </bean>
+    <!--todo define aliases for readers-->
+
+    <bean id="collectionLoader" class="rubiconproject.reader.CollectionLoader">
+        <constructor-arg ref="inputFileReaderFactory"/>
+    </bean>
+
+    <bean id="inputDataProcessor" class="rubiconproject.processor.InputDataProcessor">
+        <constructor-arg ref="fileListProvider"/>
+        <constructor-arg ref="inputDataKeywordsProvider"/>
+        <constructor-arg ref="collectionLoader"/>
+    </bean>
+
+    <bean id="output" class="rubiconproject.writer.FileOutput">
+        <constructor-arg value="${output.file}"/>
+    </bean>
+
+    <bean id="resultPrinter" class="rubiconproject.writer.ResultPrinter">
+        <constructor-arg ref="objectMapper"/>
+    </bean>
+
+    <bean id="mainWorker" class="rubiconproject.Worker">
+        <constructor-arg ref="inputDataProcessor"/>
+        <constructor-arg ref="resultPrinter"/>
+        <constructor-arg ref="output"/>
+    </bean>
+</beans>

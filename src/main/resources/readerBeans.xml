@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="csvFileReader" class="rubiconproject.reader.CSVFileReader" scope="prototype" factory-method="createInstance">
+        <constructor-arg value="dummy"/>
+    </bean>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+    <bean id="jsonFileReader" class="rubiconproject.reader.JsonFileReader" scope="prototype">
+        <constructor-arg value="dummy" index="0"/>
+        <property name="objectMapper" ref="objectMapper"/>
+    </bean>
+
+    <alias name="csvFileReader" alias="csv"/>
+    <alias name="jsonFileReader" alias="json"/>
+</beans>

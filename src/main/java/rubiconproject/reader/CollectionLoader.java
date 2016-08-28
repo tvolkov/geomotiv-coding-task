@@ -2,8 +2,6 @@ package rubiconproject.reader;
 
 import rubiconproject.model.Collection;
 
-import java.util.Map;
-
 /**
  * Loads the collection of Entry's from either csv of json file
  */
@@ -20,23 +18,16 @@ public class CollectionLoader {
      * which are not supposed to be passed in their constructors
      * So, despite the fact that having bean names in code is bad idea, I think this is most optimal trade-off in this situation
      */
-    private final Map<String, String> beanAliases;
-
-    public CollectionLoader(InputFileReaderFactory inputFileReaderFactory, Map<String, String> beanAliases) {
+    public CollectionLoader(InputFileReaderFactory inputFileReaderFactory) {
         this.inputFileReaderFactory = inputFileReaderFactory;
-        this.beanAliases = beanAliases;
     }
 
     public Collection loadCollection(String fileName){
-        InputFileReader inputFileReader = inputFileReaderFactory.getReader(getBeanName(getBeanAlias(fileName)));
+        InputFileReader inputFileReader = inputFileReaderFactory.getReader(getBeanAlias(fileName), fileName);
         return new Collection(fileName, inputFileReader.readFile());
     }
 
-    private String getBeanName(String alias){
-        return beanAliases.get(alias);
-    }
-
     private String getBeanAlias(String fileName) {
-        return fileName.substring(fileName.indexOf('.') + 1);
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 }

@@ -41,7 +41,7 @@ public class InputDataProcessor {
         List<Collection> collections = new ArrayList<>();
 
         collections.addAll(inputFiles.stream()
-                .map(file -> collectionLoader.loadCollection(file.getName()))
+                .map(file -> collectionLoader.loadCollection(file.getPath()))
                 .collect(Collectors.toList()));
         collections.forEach(collection -> inputDataKeywordsProvider.provideKeywords(collection.getEntries()));
         return collections;
