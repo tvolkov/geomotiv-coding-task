@@ -8,7 +8,9 @@
     <context:component-scan base-package="rubiconproject"/>
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <import resource="classpath:readerBeans.xml" />
+    <import resource="classpath:readerBeans.xml"/>
+    <import resource="classpath:printerBeans.xml"/>
+    <import resource="classpath:keywordsBeans.xml"/>
 
     <util:list id="allowedFileExtensions" value-type="java.lang.String">
         <value>.csv</value>
@@ -22,20 +24,6 @@
         <constructor-arg ref="inputFileValidator"/>
     </bean>
 
-    <util:map id="dummyKeywordsMap">
-        <entry key="0" value="sports,tennis,recreation" />
-        <entry key="1" value="japan,travel" />
-        <entry key="2" value="guitar,music" />
-    </util:map>
-
-    <bean id="keywordService" class="rubiconproject.keywordservice.DummyKeywordService">
-        <constructor-arg ref="dummyKeywordsMap"/>
-    </bean>
-
-    <bean id="inputDataKeywordsProvider" class="rubiconproject.keywordservice.InputDataKeywordsProvider">
-        <constructor-arg ref="keywordService"/>
-    </bean>
-
     <bean id="collectionLoader" class="rubiconproject.reader.CollectionLoader">
         <constructor-arg ref="inputFileReaderFactory"/>
     </bean>
@@ -44,14 +32,6 @@
         <constructor-arg ref="fileListProvider"/>
         <constructor-arg ref="inputDataKeywordsProvider"/>
         <constructor-arg ref="collectionLoader"/>
-    </bean>
-
-    <bean id="output" class="rubiconproject.writer.FileOutput">
-        <constructor-arg value="${output.file}"/>
-    </bean>
-
-    <bean id="resultPrinter" class="rubiconproject.writer.ResultPrinter">
-        <constructor-arg ref="objectMapper"/>
     </bean>
 
     <bean id="mainWorker" class="rubiconproject.Worker">

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:map id="dummyKeywordsMap">
+        <entry key="0" value="sports,tennis,recreation" />
+        <entry key="1" value="japan,travel" />
+        <entry key="2" value="guitar,music" />
+    </util:map>
+
+    <bean id="keywordService" class="rubiconproject.keywordservice.DummyKeywordService">
+        <constructor-arg ref="dummyKeywordsMap"/>
+    </bean>
+
+    <bean id="inputDataKeywordsProvider" class="rubiconproject.keywordservice.InputDataKeywordsProvider">
+        <constructor-arg ref="keywordService"/>
+    </bean>
+</beans>
