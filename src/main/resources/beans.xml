@@ -12,11 +12,6 @@
     <import resource="classpath:printerBeans.xml"/>
     <import resource="classpath:keywordsBeans.xml"/>
 
-    <util:list id="allowedFileExtensions" value-type="java.lang.String">
-        <value>.csv</value>
-        <value>.json</value>
-    </util:list>
-
     <bean id="inputFileValidator" class="rubiconproject.processor.InputFileValidator"/>
 
     <bean id="fileListProvider" class="rubiconproject.processor.FileListProvider">

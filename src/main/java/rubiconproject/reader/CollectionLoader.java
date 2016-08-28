@@ -1,6 +1,7 @@
 package rubiconproject.reader;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import rubiconproject.model.Collection;
 
 import java.io.File;
@@ -40,6 +41,6 @@ public class CollectionLoader {
     }
 
     private String getBeanAlias(String fileName) {
-        return fileName.substring(fileName.lastIndexOf('.') + 1);
+        return FilenameUtils.getExtension(fileName);
     }
 }

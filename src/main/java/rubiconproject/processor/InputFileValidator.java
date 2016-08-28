@@ -1,14 +1,14 @@
 package rubiconproject.processor;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
-
-import static org.apache.commons.lang3.StringUtils.endsWithAny;
+import java.util.List;
 
 public class InputFileValidator {
 
-    private String[] allowedFileExtensions;
+    private List<String> allowedFileExtensions;
 
     public boolean isFileValid(File inputFile) {
         if (!inputFile.isFile()){
@@ -16,13 +16,12 @@ public class InputFileValidator {
         }
 
         String fileName = inputFile.getName();
-        //todo can be just: get file extension and check if array contains it
-        return endsWithAny(fileName, allowedFileExtensions) || endsWithAny(fileName, allowedFileExtensions);
+        return allowedFileExtensions.contains(FilenameUtils.getExtension(fileName));
 
     }
 
-    @Value("${allowed.file.extensions}")
-    public void setAllowedFileExtensions(String[] allowedFileExtensions) {
+    @Value("#{'${allowed.file.extensions}'.split(',')}")
+    public void setAllowedFileExtensions(List<String> allowedFileExtensions) {
         this.allowedFileExtensions = allowedFileExtensions;
     }
 }
