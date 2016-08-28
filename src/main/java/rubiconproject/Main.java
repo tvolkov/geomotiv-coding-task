@@ -5,14 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * I have moved program arguments from the 'args' array to property file.
- * Otherwise, if we would inject the 'args' from command line to application context, then
- * applicationContext.refresh()
- * should be invoked, which will lead to unnecessary prototype bean initialization, and result in
- * uncaught exception since some of the prototype beans are defined with the dummy constructor args,
- * which are not supposed to be passed in their constructors
- *
- * Also, I decided to give up the idea of using groovy config, since there're a few things which groovy config
+  *I decided to give up the idea of using groovy config, since there're a few things which groovy config
  * is missing, comparing to xml.
  * For instance, I didn't find a way to declare bean aliases in groovy.
  * Also, intellij idea doesn't recognize bean definitions written in groovy, which is inconvenient.

@@ -14,6 +14,11 @@ import java.util.List;
 @Slf4j
 public class JsonFileReader implements InputFileReader {
 
+    /**
+     * having this pathToFile here is probably not a good idea, because it makes this object stateful.
+     * However I will leave it as is, since doing refactoring might take plenty of time because, among other things,
+     * of usage the third party libraries for parsing csv and json
+     */
     private final String pathToFile;
     private ObjectMapper objectMapper;
 

@@ -13,11 +13,11 @@ public class ResultPrinter {
 
     private final ObjectMapper objectMapper;
 
+    private boolean prettyPrintResult;
+
     public ResultPrinter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
-    private boolean prettyPrintResult;
 
     public String printResult(List<Collection> result){
         StringBuilder stringBuilder = new StringBuilder();
