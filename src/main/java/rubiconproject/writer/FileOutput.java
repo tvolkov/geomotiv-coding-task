@@ -7,15 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 @Slf4j
-public class FileOutput implements Output {
-    private final String outputFile;
+public class FileOutput {
 
-    public FileOutput(String outputFile) {
-        this.outputFile = outputFile;
-    }
-
-    @Override
-    public void output(String content) {
+    public void output(String content, String outputFile) {
         try (PrintWriter printWriter = new PrintWriter(new File(outputFile))){
             printWriter.println(content);
             printWriter.flush();

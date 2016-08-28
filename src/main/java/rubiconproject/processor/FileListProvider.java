@@ -11,16 +11,27 @@ import java.util.List;
  */
 @Slf4j
 public class FileListProvider {
-    private final File inputDirectory;
     private final InputFileValidator inputFileValidator;
 
-    public FileListProvider(File inputDirectory, InputFileValidator inputFileValidator) {
-        this.inputDirectory = inputDirectory;
+    public FileListProvider(InputFileValidator inputFileValidator) {
         this.inputFileValidator = inputFileValidator;
-        log.debug("initialized with inputDirectory " + inputDirectory);
     }
 
-    public List<String> getInputFilesList() {
+    public List<String> getInputFilesList(File inputDir) {
+        log.info("inputDirectory " + inputDir.getPath());
+
+        validateInputFiles(inputDir);
+
+        List<String> inputFiles = new ArrayList<>();
+        for (File file : inputDir.listFiles())
+            if (inputFileValidator.isFileValid(file)) {
+                inputFiles.add(file.getPath());
+            }
+
+        return inputFiles;
+    }
+
+    private void validateInputFiles(File inputDirectory) {
         if (!inputDirectory.exists()) {
             throw new IllegalArgumentException("Directory " + inputDirectory + " doesn't exist");
         }
@@ -29,17 +40,8 @@ public class FileListProvider {
             throw new IllegalArgumentException(inputDirectory + " is not a directory");
         }
 
-        File[] files = inputDirectory.listFiles();
-        if (files == null){
+        if (inputDirectory.listFiles() == null){
             throw new IllegalStateException("Can't read files from directory");
         }
-
-        List<String> inputFiles = new ArrayList<>();
-        for (File file : files)
-            if (inputFileValidator.isFileValid(file)) {
-                inputFiles.add(file.getPath());
-            }
-
-        return inputFiles;
     }
 }

@@ -5,6 +5,7 @@ import rubiconproject.keywordservice.InputDataKeywordsProvider;
 import rubiconproject.model.Collection;
 import rubiconproject.reader.CollectionLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +26,8 @@ public class InputDataProcessor {
         this.collectionLoader = collectionLoader;
     }
 
-    public List<Collection> processInputData() {
-        List<String> inputFiles = fileListProvider.getInputFilesList();
+    public List<Collection> processInputData(String inputDirectory) {
+        List<String> inputFiles = fileListProvider.getInputFilesList(new File(inputDirectory));
         if (inputFiles.size() == 0) {
             log.info("no input files found. exiting");
             return Collections.emptyList();

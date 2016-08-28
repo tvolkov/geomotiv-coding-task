@@ -15,7 +15,6 @@
     <bean id="inputFileValidator" class="rubiconproject.processor.InputFileValidator"/>
 
     <bean id="fileListProvider" class="rubiconproject.processor.FileListProvider">
-        <constructor-arg value="${input.directory}"/>
         <constructor-arg ref="inputFileValidator"/>
     </bean>
 

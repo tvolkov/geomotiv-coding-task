@@ -1,19 +1,16 @@
 package rubiconproject.processor;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import rubiconproject.processor.FileListProvider;
-import rubiconproject.processor.InputFileValidator;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +32,7 @@ public class FileListProviderTest {
         when(mockedInputDirectory.exists()).thenReturn(false);
 
         //when
-        fileListProvider.getInputFilesList();
+        fileListProvider.getInputFilesList(mockedInputDirectory);
 
     }
 
@@ -46,7 +43,7 @@ public class FileListProviderTest {
         when(mockedInputDirectory.isDirectory()).thenReturn(false);
 
         //when
-        fileListProvider.getInputFilesList();
+        fileListProvider.getInputFilesList(mockedInputDirectory);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -57,7 +54,7 @@ public class FileListProviderTest {
         when(mockedInputDirectory.listFiles()).thenReturn(null);
 
         //when
-        fileListProvider.getInputFilesList();
+        fileListProvider.getInputFilesList(mockedInputDirectory);
     }
 
     @Test
@@ -78,7 +75,7 @@ public class FileListProviderTest {
         when(inputFileValidator.isFileValid(mockedFile2)).thenReturn(true);
 
         //when
-        List<String> result = fileListProvider.getInputFilesList();
+        List<String> result = fileListProvider.getInputFilesList(mockedInputDirectory);
 
         //then
         assertEquals(mockedFiles.length, result.size());
@@ -102,7 +99,7 @@ public class FileListProviderTest {
         when(inputFileValidator.isFileValid(mockedFile2)).thenReturn(false);
 
         //when
-        List<String> result = fileListProvider.getInputFilesList();
+        List<String> result = fileListProvider.getInputFilesList(mockedInputDirectory);
 
         //then
         assertEquals(1, result.size());

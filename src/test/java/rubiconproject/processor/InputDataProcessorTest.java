@@ -13,6 +13,7 @@ import rubiconproject.model.Entry;
 import rubiconproject.reader.CollectionLoader;
 import rubiconproject.reader.InputFileReader;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class InputDataProcessorTest {
 
     private static final String COLLECTION1 = "collection1.csv";
     private static final String COLLECTION2 = "collection2.json";
+    private static final String INPUT_PATH = "path";
+    private static final File INPUT_DIR = new File(INPUT_PATH);
 
     @Before
     public void setUp(){
@@ -63,12 +66,12 @@ public class InputDataProcessorTest {
 
         when(mockInputDataReader.readFile()).thenReturn(list1);
         when(mockInputDataReader.readFile()).thenReturn(list2);
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(fileNames);
+        when(mockedFileListProvider.getInputFilesList(INPUT_DIR)).thenReturn(fileNames);
         when(mockCollectionLoader.loadCollection(COLLECTION1)).thenReturn(collection1);
         when(mockCollectionLoader.loadCollection(COLLECTION2)).thenReturn(collection2);
 
         //when
-        List<Collection> result = inputDataProcessor.processInputData();
+        List<Collection> result = inputDataProcessor.processInputData(INPUT_PATH);
 
         //then
         assertEquals(2, result.size());
@@ -86,10 +89,10 @@ public class InputDataProcessorTest {
     @Test
     public void shouldReturnEmptyListIfNoInputFilesFound(){
         //given
-        when(mockedFileListProvider.getInputFilesList()).thenReturn(Collections.emptyList());
+        when(mockedFileListProvider.getInputFilesList(INPUT_DIR)).thenReturn(Collections.emptyList());
 
         //when
-        List<Collection> result = inputDataProcessor.processInputData();
+        List<Collection> result = inputDataProcessor.processInputData(INPUT_PATH);
 
         //then
         assertEquals(0, result.size());

@@ -26,7 +26,14 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:beans.xml");
         Worker worker = applicationContext.getBean("mainWorker",  Worker.class);
+        validateArguments(args);
         log.info("start");
-        worker.start();
+        worker.start(args[0], args[1]);
+    }
+
+    private static void validateArguments(String[] args) {
+        if (args.length != 2){
+            throw new IllegalArgumentException("Incorrect number of arguments");
+        }
     }
 }
