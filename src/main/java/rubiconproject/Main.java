@@ -4,10 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Arrays;
-
 /**
- * I have moved progam arguments from the 'args' array to property file.
+ * I have moved program arguments from the 'args' array to property file.
  * Otherwise, if we would inject the 'args' from command line to application context, then
  * applicationContext.refresh()
  * should be invoked, which will lead to unnecessary prototype bean initialization, and result in

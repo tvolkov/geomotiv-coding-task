@@ -35,7 +35,6 @@
     <bean id="inputDataKeywordsProvider" class="rubiconproject.keywordservice.InputDataKeywordsProvider">
         <constructor-arg ref="keywordService"/>
     </bean>
-    <!--todo define aliases for readers-->
 
     <bean id="collectionLoader" class="rubiconproject.reader.CollectionLoader">
         <constructor-arg ref="inputFileReaderFactory"/>

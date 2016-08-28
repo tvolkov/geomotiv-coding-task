@@ -32,7 +32,7 @@ public class CSVFileReaderTest {
     private static final String[] MOCKED_CSV_LINE = {ID, NAME, MOBILE, SCORE};
 
     @Test
-    public void shouldeturnListOfParsedEntries() throws IOException {
+    public void shouldReturnListOfParsedEntries() throws IOException {
         //given
         when(mockedCsvReader.readNext()).thenReturn(CSV_HEADER).thenReturn(MOCKED_CSV_LINE).thenReturn(null);
 

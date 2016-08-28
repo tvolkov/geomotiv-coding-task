@@ -5,4 +5,10 @@
   gradlew test
 
   - run program:
-  gradlew execute -Dexec.args=input,output.json
+  gradlew execute
+
+Note that arguments are passed via property file (not via command line), so before running please go to src/main/resources/application.properties
+and make sure that the following properties have correct values
+
+input.directory=input
+output.file=output123.json

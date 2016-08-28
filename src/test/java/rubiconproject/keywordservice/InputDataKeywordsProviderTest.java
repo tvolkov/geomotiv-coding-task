@@ -27,7 +27,7 @@ public class InputDataKeywordsProviderTest {
     private static final String TEST_KEYWORD = "test";
 
     @Test
-    public void shouldResolveKeywordsForGivenEntires(){
+    public void shouldResolveKeywordsForGivenEntries(){
         //given
         Entry entry = new Entry("1", "1", "1", "1");
         List<Entry> entryList = Lists.newArrayList(entry);
